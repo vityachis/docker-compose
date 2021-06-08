@@ -7,8 +7,13 @@ services:
     - '.:/var/www'
     depends_on:
       - mysql
+    environment:
+      - XDEBUG_IDEKEY=${XDEBUG_IDEKEY}
+      - XDEBUG_PORT=${XDEBUG_PORT}
     networks:
       - app_network
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
 
   nginx:
     build:
@@ -22,6 +27,8 @@ services:
       - php
     depends_on:
       - php
+    environment:
+      - NGINX_HOST=${APP_URL}
     networks:
       - app_network
 
