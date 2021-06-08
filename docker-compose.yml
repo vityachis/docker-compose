@@ -15,7 +15,7 @@ services:
       context: docker/nginx
       dockerfile: Dockerfile
     ports:
-    - '8888:80'
+    - '${APP_PORT:-80}:80'
     volumes:
     - '.:/var/www'
     links:
@@ -26,16 +26,17 @@ services:
       - app_network
 
   mysql:
-    image: 'mysql:8.0'
+    image: mysql:8.0
     ports:
-    - '33061:3306'
+    - '${MYSQL_PORT:-3306}:3306'
     volumes:
     - 'app_volume:/var/lib/mysql'
     environment:
-      MYSQL_DATABASE: app
-      MYSQL_USER: app
-      MYSQL_PASSWORD: app
-      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: '${MYSQL_DATABASE}'
+      MYSQL_USER: '${MYSQL_USER}'
+      MYSQL_PASSWORD: '${MYSQL_PASSWORD}'
+      MYSQL_ROOT_PASSWORD: '${MYSQL_ROOT_PASSWORD}'
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
     networks:
       - app_network
 
