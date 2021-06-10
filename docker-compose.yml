@@ -3,13 +3,12 @@ services:
     build:
       context: docker/php
       dockerfile: Dockerfile
+    env_file:
+      - docker/.env
     volumes:
     - '.:/var/www'
     depends_on:
       - mysql
-    environment:
-      - XDEBUG_IDEKEY=${XDEBUG_IDEKEY}
-      - XDEBUG_PORT=${XDEBUG_PORT}
     networks:
       - app_network
     extra_hosts:
@@ -20,7 +19,9 @@ services:
       context: docker/nginx
       dockerfile: Dockerfile
       args:
-        ROOT_PATH: ${ROOT_PATH}
+        ROOT_PATH: ${ROOT_PATH:-/var/www/public}
+    env_file:
+      - docker/.env
     ports:
     - '${APP_PORT:-80}:80'
     volumes:
@@ -29,22 +30,20 @@ services:
       - php
     depends_on:
       - php
-    environment:
-      - NGINX_HOST=${APP_URL}
     networks:
       - app_network
 
   mysql:
     image: mysql:8.0
     ports:
-    - '${MYSQL_PORT:-3306}:3306'
+    - '${DB_PORT:-3306}:3306'
     volumes:
     - 'app_volume:/var/lib/mysql'
     environment:
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_DATABASE:-app}
+      MYSQL_USER: ${DB_USERNAME:-app}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-app}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-root}
       MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
     networks:
       - app_network
