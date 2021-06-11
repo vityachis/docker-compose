@@ -1,15 +1,15 @@
-FROM php:8.0-fpm
+FROM php:8.0-fpm-alpine
 
-RUN apt-get update && apt-get install -y \
-    nano git \
-    libfreetype6-dev \
-    libjpeg62-turbo-dev \
-    libpng-dev \
+MAINTAINER Viktor Chistyakov <vityachis@gmail.com>
+
+RUN apk add --no-cache \
+    freetype-dev libjpeg-turbo-dev libpng-dev \
+    nano git $PHPIZE_DEPS \
     && pecl install xdebug-3.0.4 \
     && docker-php-ext-enable xdebug \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install -j$(nproc) \
-    exif pdo_mysql
+    exif pdo_mysql opcache
 
 COPY custom.ini ${PHP_INI_DIR}/conf.d/
 
