@@ -9,6 +9,7 @@ services:
     - '.:/var/www'
     depends_on:
       - mysql
+      - redis
     networks:
       - app_network
     extra_hosts:
@@ -39,7 +40,7 @@ services:
     ports:
     - '${MYSQL_PORT:-3306}:${DB_PORT:-3306}'
     volumes:
-    - 'app_volume:/var/lib/mysql'
+    - 'mysql_volume:/var/lib/mysql'
     environment:
       MYSQL_DATABASE: ${DB_DATABASE:-app}
       MYSQL_USER: ${DB_USERNAME:-app}
@@ -48,10 +49,21 @@ services:
     networks:
       - app_network
 
+  redis:
+    image: redis:6.2-alpine
+    ports:
+    - '6379:6379'
+    volumes:
+    - 'redis_volume:/var/lib/redis'
+    environment:
+      REDIS_REPLICATION_MODE: master
+
 networks:
   app_network:
     driver: bridge
 
 volumes:
-  app_volume:
+  mysql_volume:
+    driver: local
+  redis_volume:
     driver: local

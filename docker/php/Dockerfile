@@ -5,8 +5,8 @@ MAINTAINER Viktor Chistyakov <vityachis@gmail.com>
 RUN apk add --no-cache \
     freetype-dev libjpeg-turbo-dev libpng-dev \
     nano git nodejs npm $PHPIZE_DEPS \
-    && pecl install xdebug-3.0.4 \
-    && docker-php-ext-enable xdebug \
+    && pecl install xdebug-3.0.4 redis-5.3.4 \
+    && docker-php-ext-enable xdebug redis \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install -j$(nproc) \
     exif pdo_mysql opcache
