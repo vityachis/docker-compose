@@ -4,12 +4,13 @@ MAINTAINER Viktor Chistyakov <vityachis@gmail.com>
 
 RUN apk add --no-cache \
     freetype-dev libjpeg-turbo-dev libpng-dev \
+    libssh-dev rabbitmq-c-dev \
     nano git nodejs npm $PHPIZE_DEPS \
-    && pecl install xdebug-3.0.4 redis-5.3.4 \
-    && docker-php-ext-enable xdebug redis \
-    && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install -j$(nproc) \
-    exif pdo_mysql opcache
+    sockets exif pdo_mysql opcache \
+    && pecl install xdebug-3.0.4 redis-5.3.4 amqp-1.11.0beta \
+    && docker-php-ext-enable xdebug redis amqp \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg
 
 COPY custom.ini ${PHP_INI_DIR}/conf.d/
 

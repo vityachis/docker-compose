@@ -3,13 +3,15 @@ services:
     build:
       context: docker/php
       dockerfile: Dockerfile
+    restart: on-failure
     env_file:
       - docker/docker.env
     volumes:
-    - '.:/var/www'
+      - '.:/var/www'
     depends_on:
       - mysql
       - redis
+      - rabbitmq
     networks:
       - app_network
     extra_hosts:
@@ -21,13 +23,14 @@ services:
       dockerfile: Dockerfile
       args:
         ROOT_PATH: ${ROOT_PATH:-/var/www/public}
+    restart: on-failure
     env_file:
       - docker/docker.env
     ports:
-    - '${APP_PORT:-80}:80'
-    - '${APP_SECURE_PORT:-443}:443'
+      - '${APP_PORT:-80}:80'
+      - '${APP_SECURE_PORT:-443}:443'
     volumes:
-    - '.:/var/www'
+      - '.:/var/www'
     links:
       - php
     depends_on:
@@ -37,10 +40,11 @@ services:
 
   mysql:
     image: mysql:8.0
+    restart: on-failure
     ports:
-    - '${MYSQL_PORT:-3306}:${DB_PORT:-3306}'
+      - '${MYSQL_PORT:-3306}:${DB_PORT:-3306}'
     volumes:
-    - 'mysql_volume:/var/lib/mysql'
+      - 'mysql_volume:/var/lib/mysql'
     environment:
       MYSQL_DATABASE: ${DB_DATABASE:-app}
       MYSQL_USER: ${DB_USERNAME:-app}
@@ -51,12 +55,29 @@ services:
 
   redis:
     image: redis:6.2-alpine
+    restart: on-failure
     ports:
-    - '6379:6379'
+      - '${REDIS_PORT:-6379}:6379'
     volumes:
-    - 'redis_volume:/var/lib/redis'
+      - 'redis_volume:/var/lib/redis'
     environment:
       REDIS_REPLICATION_MODE: master
+    networks:
+      - app_network
+
+  rabbitmq:
+    image: rabbitmq:3.8-management-alpine
+    restart: on-failure
+    ports:
+      - '${RABBITMQ_PORT:-5672}:5672'
+      - '${RABBITMQ_MANAGEMENT_PORT:-15672}:15672'
+    volumes:
+      - 'rabbitmq_volume:/var/lib/rabbitmq'
+    environment:
+      RABBITMQ_DEFAULT_USER: "${RABBITMQ_USER:-guest}"
+      RABBITMQ_DEFAULT_PASS: "${RABBITMQ_PASS:-guest}"
+    networks:
+      - app_network
 
 networks:
   app_network:
@@ -66,4 +87,6 @@ volumes:
   mysql_volume:
     driver: local
   redis_volume:
+    driver: local
+  rabbitmq_volume:
     driver: local
