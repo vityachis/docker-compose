@@ -2,15 +2,16 @@ FROM php:8.0-fpm-alpine
 
 MAINTAINER Viktor Chistyakov <vityachis@gmail.com>
 
-RUN apk add --no-cache \
-    freetype-dev libjpeg-turbo-dev libpng-dev \
-    libssh-dev rabbitmq-c-dev \
-    zsh nano git nodejs npm $PHPIZE_DEPS \
-    && docker-php-ext-install -j$(nproc) \
-    sockets exif pdo_mysql opcache \
-    && pecl install xdebug-3.0.4 redis-5.3.4 amqp-1.11.0beta \
-    && docker-php-ext-enable xdebug redis amqp \
-    && docker-php-ext-configure gd --with-freetype --with-jpeg
+RUN apk add --no-cache freetype-dev libjpeg-turbo-dev libpng-dev libssh-dev \
+    zsh nano git nodejs npm rabbitmq-c-dev ${PHPIZE_DEPS}
+
+RUN docker-php-ext-install -j$(nproc) sockets exif pdo_mysql opcache
+RUN docker-php-ext-configure gd --with-freetype --with-jpeg
+
+RUN pecl install xdebug-3.0.4 redis-5.3.4 amqp-1.11.0beta #PHP == 8.0
+#RUN pecl install xdebug-3.0.4 redis-5.3.4 amqp-1.10.2     #PHP >= 7.2
+#RUN pecl install xdebug-2.7.2 redis-5.3.4 amqp-1.10.2     #PHP <= 7.1
+RUN docker-php-ext-enable xdebug redis amqp
 
 COPY custom.ini ${PHP_INI_DIR}/conf.d/
 COPY aliases.sh /root/.zshrc
