@@ -11,6 +11,7 @@ services:
     depends_on:
       - mysql
       - redis
+      - memcached
       - rabbitmq
     networks:
       - app_network
@@ -62,6 +63,14 @@ services:
       - 'redis_volume:/var/lib/redis'
     environment:
       REDIS_REPLICATION_MODE: master
+    networks:
+      - app_network
+
+  memcached:
+    image: memcached:1.6-alpine
+    restart: on-failure
+    ports:
+      - '${MEMCACHED_PORT:-11211}:11211'
     networks:
       - app_network
 
