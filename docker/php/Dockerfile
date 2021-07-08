@@ -4,7 +4,7 @@ MAINTAINER Viktor Chistyakov <vityachis@gmail.com>
 
 RUN apk add --no-cache freetype-dev libjpeg-turbo-dev libpng-dev \
     libssh-dev rabbitmq-c-dev libmemcached-dev
-RUN apk add --no-cache zsh nano git nodejs npm ${PHPIZE_DEPS}
+RUN apk add --no-cache zsh nano git npm ${PHPIZE_DEPS}
 
 RUN docker-php-ext-install -j$(nproc) sockets exif pdo_mysql opcache
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg
