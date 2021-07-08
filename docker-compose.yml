@@ -1,7 +1,7 @@
 services:
   php:
     build:
-      context: docker/php
+      context: docker/php${PHP_VERSION:-8.0}
       dockerfile: Dockerfile
     restart: on-failure
     env_file:
