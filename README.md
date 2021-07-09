@@ -1,4 +1,6 @@
 # Global ENV variables:
+###### Mapping local ports to ports in Docker container (ports for services in Docker container remain default): ```APP_PORT```, ```APP_SECURE_PORT```, ```MYSQL_PORT```, ```REDIS_PORT```, ```RABBITMQ_PORT```, ```RABBITMQ_MANAGEMENT_PORT```
+
 - ```ROOT_PATH``` (default ```/var/www/public```)
 - ```PHP_VERSION``` (default ```8.0```): Supported PHP versions: ```7.0```, ```7.1```, ```7.2```, ```7.3```, ```7.4```, ```8.0```
 ---
@@ -10,7 +12,7 @@
 ---
 - ```MYSQL_PORT``` (default ```3306```)
 - ```DB_DATABASE``` (default ```app```)
-- ```DB_USERNAME``` (default ```app```)
+- ```DB_USERNAME``` (default ```app```): **```DON'T USE THE USERNAME "root" ```**
 - ```DB_PASSWORD``` (default ```app```)
 - ```DB_ROOT_PASSWORD``` (default ```root```)
 ---
