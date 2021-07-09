@@ -4,10 +4,11 @@ services:
       context: docker/php${PHP_VERSION:-8.0}
       dockerfile: Dockerfile
     restart: on-failure
-    env_file:
-      - docker/docker.env
     volumes:
       - '.:/var/www'
+    environment:
+      XDEBUG_PORT: ${XDEBUG_PORT:-9003}
+      XDEBUG_IDEKEY: ${XDEBUG_IDEKEY:-IDEKEY}
     depends_on:
       - mysql
       - redis
@@ -25,13 +26,13 @@ services:
       args:
         ROOT_PATH: ${ROOT_PATH:-/var/www/public}
     restart: on-failure
-    env_file:
-      - docker/docker.env
     ports:
       - '${APP_PORT:-80}:80'
       - '${APP_SECURE_PORT:-443}:443'
     volumes:
       - '.:/var/www'
+    environment:
+      NGINX_HOST: ${NGINX_HOST:-app.local}
     links:
       - php
     depends_on:
@@ -43,7 +44,7 @@ services:
     image: mysql:8.0
     restart: on-failure
     ports:
-      - '${MYSQL_PORT:-3306}:${DB_PORT:-3306}'
+      - '${MYSQL_PORT:-3306}:3306'
     volumes:
       - 'mysql_volume:/var/lib/mysql'
     environment:
