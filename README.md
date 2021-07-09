@@ -37,7 +37,7 @@
 2. PHP:
     - Add new CLI Interpreters:
       - Server: ```Docker```
-      - Image name: ```docker_php:latest```
+      - Image name: ```%PROJECT_FOLDER_NAME%_php:latest```
     - Path mappings (or Docker container ```[Host path] -> [Container path]```):
       - ```<Project root> -> /var/www```
     - Xdebug:
