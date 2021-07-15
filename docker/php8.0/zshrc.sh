@@ -1,4 +1,4 @@
-PS1="%F{green}%n@docker%f %F{blue}%1~%f %F{red}%#%f "
+PS1="%F{green}Docker >%f %F{blue}%1~%f %F{red}%#%f "
 
 alias app='cd /var/www'
 alias c='clear'
