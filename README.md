@@ -1,13 +1,19 @@
 ## This is docker-compose with included: ```PHP``` (```7.0```, ```7.1```, ```7.2```, ```7.3```, ```7.4```, ```8.0```), ```Nginx```, ```MySQL```, ```Redis```, ```Memcached```, ```RabbitMQ```
 
 ### How to use?
-###### Coming soon
+1. Clone this repository: ```git clone https://github.com/vityachis/docker-compose.git```
+2. Copy ```docker-compose.yml``` and ```docker``` to your project root directory
+3. Rename the folder with required PHP version to ```php``` (in ```docker``` folder)
+4. Delete unnecessary PHP versions from ```docker``` folder
+5. Set ENV variables (if need)
+6. Configure Xdebug in PhpStorm
+7. **ENJOY :)**
+
 
 ### Global ENV variables:
 ###### Mapping local ports to ports in Docker container (ports for services in Docker container remain default): ```APP_PORT```, ```APP_SECURE_PORT```, ```MYSQL_PORT```, ```REDIS_PORT```, ```RABBITMQ_PORT```, ```RABBITMQ_MANAGEMENT_PORT```
 
 - ```ROOT_PATH``` (default ```/var/www/public```)
-- ```PHP_VERSION``` (default ```8.0```): Supported PHP versions: ```7.0```, ```7.1```, ```7.2```, ```7.3```, ```7.4```, ```8.0```
 <br>
 
 - ```APP_PORT``` (default ```80```)
