@@ -25,9 +25,10 @@
 
 - ```MYSQL_PORT``` (default ```3306```)
 - ```DB_DATABASE``` (default ```app```)
-- ```DB_USERNAME``` (default ```app```): **```DON'T USE THE USERNAME "root" ```**
+- ```DB_USERNAME``` (default ```app```)
 - ```DB_PASSWORD``` (default ```app```)
-- ```DB_ROOT_PASSWORD``` (default ```root```)
+- ```DB_ROOT_USERNAME``` (default ```uroot```)
+- ```DB_ROOT_PASSWORD``` (default ```proot```)
 <br>
 
 - ```REDIS_PORT``` (default ```6379```)
