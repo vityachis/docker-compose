@@ -51,7 +51,7 @@ services:
       MYSQL_DATABASE: ${DB_DATABASE:-app}
       MYSQL_USER: ${DB_USERNAME:-app}
       MYSQL_PASSWORD: ${DB_PASSWORD:-app}
-      MYSQL_ROOT_USER: ${DB_ROOT_USER:-uroot}
+      MYSQL_ROOT_USER: ${DB_ROOT_USERNAME:-uroot}
       MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-proot}
     networks:
       - app_network
