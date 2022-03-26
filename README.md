@@ -1,4 +1,4 @@
-## This is docker-compose with included: ```PHP``` (```7.0```, ```7.1```, ```7.2```, ```7.3```, ```7.4```, ```8.0```), ```Nginx```, ```MySQL```, ```Redis```, ```Memcached```, ```RabbitMQ```
+## This is docker-compose with included: ```PHP``` (```7.0```, ```7.1```, ```7.2```, ```7.3```, ```7.4```, ```8.0```, ```8.1```), ```Nginx```, ```MySQL```, ```Redis```, ```Memcached```, ```RabbitMQ```
 
 ### How to use?
 1. Clone this repository: ```git clone https://github.com/vityachis/docker-compose.git```
